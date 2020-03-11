@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemListAdapter(val lists: ArrayList<ItemList>): RecyclerView.Adapter<ItemListViewHolder>() {
+class ItemListAdapter(val items: ArrayList<Item>): RecyclerView.Adapter<ItemListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -13,19 +13,14 @@ class ItemListAdapter(val lists: ArrayList<ItemList>): RecyclerView.Adapter<Item
     }
 
     override fun getItemCount(): Int {
-        return lists.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
 
-        holder.listPositionTextView.text = (position + 1).toString()
-        holder.listTitleTextView.text = lists[position].name
+        holder.itemIdTextView.text = items[position].id.toString()
+        holder.itemNameTextView.text = items[position].name
 
-    }
-
-    fun addList(list: ItemList) {
-        lists.add(list)
-        notifyItemInserted(lists.size-1)
     }
 
 }
