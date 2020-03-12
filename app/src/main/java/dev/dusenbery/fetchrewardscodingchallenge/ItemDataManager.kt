@@ -10,10 +10,11 @@ class ItemDataManager(private val context: Context) {
 
         //using GSON example
         val json = """{"id": 684, "listId": "1", "name" : "Item 684"}"""
+        //val json = JSONDownloader
         val gson = Gson()
 
-        val item3: Item = gson.fromJson(json, Item::class.java)
-        itemsList.add(item3)
+        val item: Item = gson.fromJson(json, Item::class.java)
+        itemsList.add(item)
 
         return itemsList
     }
