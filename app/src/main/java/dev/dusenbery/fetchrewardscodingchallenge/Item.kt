@@ -1,9 +1,11 @@
 package dev.dusenbery.fetchrewardscodingchallenge
 
-import com.google.gson.annotations.SerializedName
-
-data class Item(
-    @SerializedName("id") val id : Int,
-    @SerializedName("listId") val listId : Int,
-    @SerializedName("name") val name : String
-)
+class Item(
+    val id: Int,
+    val listId: Int,
+    val name: String
+) {
+    override fun toString(): String {
+        return "Item [id: ${this.id.toString()}, listId: ${this.listId.toString()}, name: ${this.name}]"
+    }
+}

@@ -1,23 +1,19 @@
 package dev.dusenbery.fetchrewardscodingchallenge
 
 import android.content.Context
-import kotlinx.android.synthetic.main.item_list_view_holder.view.*
-import org.json.JSONArray
+import com.google.gson.Gson
 
 class ItemDataManager(private val context: Context) {
 
     fun readItems(): ArrayList<Item> {
         val itemsList = ArrayList<Item>()
 
-        //dummy items
-        val item = Item(1, 123, "ONE")
-        val item2 = Item(2, 456, "TWO")
+        //using GSON example
+        val json = """{"id": 684, "listId": "1", "name" : "Item 684"}"""
+        val gson = Gson()
 
-
-
-        //add the dummy items
-        itemsList.add(item)
-        itemsList.add(item2)
+        val item3: Item = gson.fromJson(json, Item::class.java)
+        itemsList.add(item3)
 
         return itemsList
     }
