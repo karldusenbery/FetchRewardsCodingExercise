@@ -1,3 +1,7 @@
+/**
+ *  Here is a class to manage the parsing of JSON
+ *  as well as using the GSON library to convery each JsonObject to a Item object from the Item model class
+ */
 package dev.dusenbery.fetchrewardscodingchallenge
 
 import android.content.Context
