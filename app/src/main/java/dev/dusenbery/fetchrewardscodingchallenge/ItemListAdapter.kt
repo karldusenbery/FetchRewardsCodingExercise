@@ -1,3 +1,8 @@
+/**
+ *  Here is the adapter for the items_recyclerview in the content_main.xml layout
+ *  It uses the ItemListViewHolder to display data in each row
+ */
+
 package dev.dusenbery.fetchrewardscodingchallenge
 
 import android.view.LayoutInflater
@@ -17,10 +22,7 @@ class ItemListAdapter(val items: ArrayList<Item>): RecyclerView.Adapter<ItemList
     }
 
     override fun onBindViewHolder(holder: ItemListViewHolder, position: Int) {
-
         holder.itemIdTextView.text = items[position].id.toString()
         holder.itemNameTextView.text = items[position].name
-
     }
-
 }

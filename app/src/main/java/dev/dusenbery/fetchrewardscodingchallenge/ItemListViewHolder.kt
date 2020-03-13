@@ -1,3 +1,8 @@
+/**
+ *  Here is the View Holder for the items_recyclerview in the content_main.xml layout
+ *  It is connected to the ItemListAdapter
+ */
+
 package dev.dusenbery.fetchrewardscodingchallenge
 
 import android.view.View

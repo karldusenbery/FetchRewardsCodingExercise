@@ -1,8 +1,16 @@
+/**
+ *  Here is a class from an online tutorial "Kotlin Android – JSON ListView – HTTP GET using HttURLConnection" that
+ *  attempts to download JSON from a URL
+ *
+ *  Reference: <https://camposha.info/kotlin-android-json-listview-http-get-using-htturlconnection/>
+ */
+
 package dev.dusenbery.fetchrewardscodingchallenge
 
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
+import android.widget.ListView
 import android.widget.Toast
 import java.io.BufferedInputStream
 import java.io.BufferedReader
@@ -13,11 +21,9 @@ import java.net.MalformedURLException
 import java.net.URL
 
 @Suppress("DEPRECATION")
-class JSONDownloader(private var c: Context, private var jsonURL: String) : AsyncTask<Void, Void, String>() {
+class JSONDownloader(private var c: Context, private var jsonURL: String, private var myListView: ListView) : AsyncTask<Void, Void, String>() {
 
     private lateinit var pd: ProgressDialog
-    var myJsonData: String = ""
-        get() = myJsonData
 
     /*
    Connect to network via HTTPURLConnection
@@ -91,7 +97,6 @@ class JSONDownloader(private var c: Context, private var jsonURL: String) : Asyn
     /*
     show dialog while downloading data
      */
-
     override fun onPreExecute() {
         super.onPreExecute()
 
@@ -115,18 +120,23 @@ class JSONDownloader(private var c: Context, private var jsonURL: String) : Asyn
         pd.dismiss()
         if (jsonData.startsWith("URL ERROR")) {
             val error = jsonData
-            //Toast.makeText(c, error, Toast.LENGTH_LONG).show()
-            //Toast.makeText(c, "MOST PROBABLY APP CANNOT CONNECT DUE TO WRONG URL SINCE MALFORMEDURLEXCEPTION WAS RAISED", Toast.LENGTH_LONG).show()
+            Toast.makeText(c, error, Toast.LENGTH_LONG).show()
+            Toast.makeText(c, "MOST PROBABLY APP CANNOT CONNECT DUE TO WRONG URL SINCE MALFORMEDURLEXCEPTION WAS RAISED", Toast.LENGTH_LONG).show()
 
         }else  if (jsonData.startsWith("CONNECT ERROR")) {
             val error = jsonData
-            //Toast.makeText(c, error, Toast.LENGTH_LONG).show()
-            //Toast.makeText(c, "MOST PROBABLY APP CANNOT CONNECT TO ANY NETWORK SINCE IOEXCEPTION WAS RAISED", Toast.LENGTH_LONG).show()
+            Toast.makeText(c, error, Toast.LENGTH_LONG).show()
+            Toast.makeText(c, "MOST PROBABLY APP CANNOT CONNECT TO ANY NETWORK SINCE IOEXCEPTION WAS RAISED", Toast.LENGTH_LONG).show()
         }
         else {
-            myJsonData = jsonData
-            Toast.makeText(c, jsonData, Toast.LENGTH_LONG).show()
+            //PARSE
+            Toast.makeText(c, "Network Connection and Download Successful. Now attempting to parse .....", Toast.LENGTH_LONG).show()
+
+            // Had to comment this out because I don't have that JSONParser class in my project.
+            // The var jsonData now contains the Json from the URL, but it needs to be sent to the ItemDataManager.readItems()
+            // Can't figure out how to get the jsonData String out of here!
+
+            //JSONParser(c, jsonData, myListView).execute()
         }
     }
-
 }
