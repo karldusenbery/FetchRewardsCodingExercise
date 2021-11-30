@@ -30,6 +30,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             items.clear()
             var item: Item
 
+            //adds Items from JSON to an ArrayList of Item objects
             for (i in 0 until ja.length()) {
                 jo = ja.getJSONObject(i)
 
@@ -49,8 +50,20 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                     //Add this Item to the ArrayList of Item objects
                     items.add(item)
                 }
-
             }
+
+
+
+            //groups Items ArrayList by listId
+            items.groupingBy { it.listId }.eachCount()
+
+            //creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key
+            //type is Map<Int, List<Item>>
+            val groupedItemsByItemId = items.groupBy { it.listId }
+
+            //print statements for debugging
+            println(items.toString())
+            println(groupedItemsByItemId.toString())
 
             return true
         } catch (e: JSONException) {
