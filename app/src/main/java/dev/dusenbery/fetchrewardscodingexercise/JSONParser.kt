@@ -39,12 +39,17 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
 
                 item = Item(id,name,listId)
 
-                //Filter out any items where "name" is blank or null.
-                if (name.isBlank())
+                /*
+                    Filter out any items where "name" is blank or null.
+                 */
+                if (name.isBlank() || name == "null"){
                     //Don't add this Item to the ArrayList of Item objects
-                else
+                }
+                else{
                     //Add this Item to the ArrayList of Item objects
                     items.add(item)
+                }
+
             }
 
             return true
