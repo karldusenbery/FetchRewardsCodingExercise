@@ -38,7 +38,13 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 val listId = jo.getInt("listId")
 
                 item = Item(id,name,listId)
-                items.add(item)
+
+                //Filter out any items where "name" is blank or null.
+                if (name.isBlank())
+                    //Don't add this Item to the ArrayList of Item objects
+                else
+                    //Add this Item to the ArrayList of Item objects
+                    items.add(item)
             }
 
             return true
