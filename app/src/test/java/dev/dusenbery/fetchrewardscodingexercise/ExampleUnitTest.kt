@@ -1,4 +1,4 @@
-package dev.dusenbery.fetchrewardscodingchallenge
+package dev.dusenbery.fetchrewardscodingexercise
 
 import org.junit.Test
 

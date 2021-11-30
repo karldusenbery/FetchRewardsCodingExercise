@@ -5,13 +5,13 @@
  *  Reference: <https://camposha.info/kotlin-android-json-listview-http-get-using-htturlconnection/>
  */
 
-package dev.dusenbery.fetchrewardscodingchallenge
+package dev.dusenbery.fetchrewardscodingexercise
 
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.AsyncTask
-import android.widget.ListView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.IOException
@@ -21,7 +21,7 @@ import java.net.MalformedURLException
 import java.net.URL
 
 @Suppress("DEPRECATION")
-class JSONDownloader(private var c: Context, private var jsonURL: String, private var myListView: ListView) : AsyncTask<Void, Void, String>() {
+class JSONDownloader(private var c: Context, private var jsonURL: String, private var myRecyclerView: RecyclerView) : AsyncTask<Void, Void, String>() {
 
     private lateinit var pd: ProgressDialog
 
@@ -75,7 +75,7 @@ class JSONDownloader(private var c: Context, private var jsonURL: String, privat
 
                     if (line == null){ break}
 
-                    jsonData.append(line + "n");
+                    jsonData.append(line);
 
                 } while (true)
 
@@ -132,11 +132,10 @@ class JSONDownloader(private var c: Context, private var jsonURL: String, privat
             //PARSE
             Toast.makeText(c, "Network Connection and Download Successful. Now attempting to parse .....", Toast.LENGTH_LONG).show()
 
-            // Had to comment this out because I don't have that JSONParser class in my project.
             // The var jsonData now contains the Json from the URL, but it needs to be sent to the ItemDataManager.readItems()
             // Can't figure out how to get the jsonData String out of here!
 
-            //JSONParser(c, jsonData, myListView).execute()
+            JSONParser(c, jsonData, myRecyclerView).execute()
         }
     }
 }

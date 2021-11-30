@@ -1,9 +1,10 @@
-package dev.dusenbery.fetchrewardscodingchallenge
+package dev.dusenbery.fetchrewardscodingexercise
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fetchrewardscodingexercise.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,10 +32,10 @@ class MainActivity : AppCompatActivity() {
         itemRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // put the ArrayList returned from itemDataManager.readItems() in the RecyclerView's adapter
-        itemRecyclerView.adapter = ItemListAdapter(items)
+        itemRecyclerView.adapter = ItemListAdapter(this@MainActivity,items)
 
         // Pass the Json URL to the JSONDownloader class that does the work of downloading the Json from that URL
-        //JSONDownloader(this@MainActivity, jsonURL).execute()
+        JSONDownloader(this@MainActivity, jsonURL, itemRecyclerView).execute()
 
     }
 }
