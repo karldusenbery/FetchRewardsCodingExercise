@@ -17,6 +17,9 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
 
     private lateinit var pd: ProgressDialog
     private var items = ArrayList<Item>()
+    private var filteredItems = ArrayList<Item>()
+    private var itemsSortedByListId = ArrayList<Item>()
+    private var itemsSortedByListIdAndThenName = ArrayList<Item>()
 
 
     /*
@@ -25,12 +28,13 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
     private fun parse(): Boolean {
         try {
             val ja = JSONArray(jsonData)
+            println("Value of UNFILTERED JSONArray(jsonData).length():  " + ja.length().toString())
             var jo: JSONObject
 
             items.clear()
             var item: Item
 
-            //adds Items from JSON to an ArrayList of Item objects
+            //adds Items from JSON data to an ArrayList of Item objects called filteredItems(after filtering out "null" and blank names
             for (i in 0 until ja.length()) {
                 jo = ja.getJSONObject(i)
 
@@ -48,22 +52,107 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 }
                 else{
                     //Add this Item to the ArrayList of Item objects
-                    items.add(item)
+                    filteredItems.add(item)
                 }
             }
+            println("Value of filteredItems.size:  " + filteredItems.size.toString())
+
+            //makes the newly filtered item list equal to the items ArrayList that gets displayed in the RecyclerView
+            //items = filteredItems
+
+
+            //sorts filteredItems ArrayList by listId, returns a List type.
+                println("filteredItems BEFORE sorting:  " + filteredItems.toString())
+            filteredItems.groupingBy { it.listId }.eachCount()
+            var itemsSortedByListIdList = filteredItems.sortedWith(compareBy({ it.listId }))
+                println("items AFTER sorting by listId:  " + itemsSortedByListIdList.toString())
+
+            println("Value of itemsSortedByListIdList.size:  " + itemsSortedByListId.size.toString())
+
+            itemsSortedByListId.clear()
+            //adds Item objects from the itemsSortedByListIdList List to an ArrayList of Item objects called itemsSortedByListId
+            for (i in 0 until itemsSortedByListIdList.size) {
+                item = itemsSortedByListIdList.get(i)
+
+                val id = item.getItemId()
+                val name = item.getItemName().toString()
+                val listId = item.getItemListId()
+
+                item = Item(id,name,listId)
+
+                itemsSortedByListId.add(item)
+                println("Value of ArrayList itemsSortedByListId [new line]:   " + itemsSortedByListId.toString())
+            }
+
+            //makes the newly sorted item list equal to the items ArrayList that gets displayed in the RecyclerView
+            items = itemsSortedByListId
+
+            // new I have a big ArrayList of List objects, sorted by listId
+
+            // --------------- Other things I tried --------------------------------------------------------------------------------------------------------//
+
+
+            //sorts items ArrayList
+            //var sortedList = items.sortedWith(compareBy({ it.listId }))
+            // for (item in sortedList) {
+                //println("sortedList value:    " + sortedList.toString())
+                //println("sortedList:  listid:    " + item.listId)
+                //println("sortedList:  name:    " + item.name)
+                //println("sortedList:  id:    " + item.id)
+            //}
+
+            //clears out current ArrayLis of items
+                //println("itmes BEFORE clearing:  " + items.toString())
+            //items.clear()
+                //println("itmes AFTER clearing:  " + items.toString())
+
+            //adds items back, but this time sorted by listId
+            //for (i in 0 until items.size()) {
+
+            //}
 
 
 
             //groups Items ArrayList by listId
-            items.groupingBy { it.listId }.eachCount()
+            //items.groupingBy { it.listId }.eachCount()
 
-            //creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key
-            //type is Map<Int, List<Item>>
-            val groupedItemsByItemId = items.groupBy { it.listId }
+            /*
+            Creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key.
+            Type is Map<Int, List<Item>>
+            Ex:
+             */
+            //val groupedItemsByItemId = items.groupBy { it.listId }
+                //print statement for debugging
+                //println("groupedItemsByItemId = " + groupedItemsByItemId.toString())
 
-            //print statements for debugging
-            println(items.toString())
-            println(groupedItemsByItemId.toString())
+            /*
+            Group Items by the Map's key which reprsents the listId into separate Lists
+             */
+
+            // First get a count of how many keys are in the Map
+            //var mapKeyCountSize: Int = groupedItemsByItemId.count()
+                //print statement for debugging
+                //println("mapKeyCountSize = " + mapKeyCountSize.toString())
+
+            //create a new List for each listId key of the Map
+            //for (i in 0 until mapKeyCountSize){
+                //var itemGroups = ArrayList<Item>(i)
+                //print statement for debugging
+                //println(itemGroups)
+
+                /*
+                attempting to make a new List for every listId group
+
+                var itemGroup = List<Item>(groupedItemsByItemId[i].count())
+                itemGroup = groupedItemsByItemId[i]
+                //print statement for debugging
+                println(itemGroup)
+
+                 */
+
+            //}
+            // --------------- [end] Other things I tried --------------------------------------------------------------------------------------------------------//
+
 
             return true
         } catch (e: JSONException) {

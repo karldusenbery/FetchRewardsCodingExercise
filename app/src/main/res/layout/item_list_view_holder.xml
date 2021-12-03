@@ -7,18 +7,21 @@
 
     <TextView
         android:id="@+id/itemIdNumber"
+        android:text="itemId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp" />
 
     <TextView
         android:id="@+id/itemName"
+        android:text="name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_weight="1" />
     <TextView
         android:id="@+id/itemListId"
+        android:text="listId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
