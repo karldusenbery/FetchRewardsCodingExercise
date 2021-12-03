@@ -16,9 +16,9 @@ import java.util.ArrayList
 class JSONParser(private var c: Context?, private var jsonData: String, private var myRecyclerView: RecyclerView) : AsyncTask<Void, Void, Boolean>() {
 
     private lateinit var pd: ProgressDialog
-    private var items = ArrayList<Item>()
-    private var filteredItems = ArrayList<Item>()
-    private var itemsSortedByListId = ArrayList<Item>()
+    private var items = ArrayList<Group>()
+    private var filteredItems = ArrayList<Group>()
+    private var itemsSortedByListId = ArrayList<Group>()
 
     /*
     Parse JSON data
@@ -29,7 +29,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             var jo: JSONObject
 
             items.clear()
-            var item: Item
+            var item: Group
 
             //adds Items from JSON data to an ArrayList of Item objects called filteredItems(after filtering out "null" and blank names
             for (i in 0 until ja.length()) {
@@ -39,7 +39,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 val name = jo.getString("name")
                 val listId = jo.getInt("listId")
 
-                item = Item(id,name,listId)
+                item = Group(id,name,listId)
 
                 /*
                     Filter out any items where "name" is blank or null.
@@ -66,7 +66,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 val name = item.getItemName().toString()
                 val listId = item.getItemListId()
 
-                item = Item(id,name,listId)
+                item = Group(id,name,listId)
 
                 itemsSortedByListId.add(item)
             }

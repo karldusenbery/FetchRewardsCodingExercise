@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/group_list_view_holder.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/item_list_view_holder.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/row_model.xml" value="0.21197916666666666" />
       </map>
