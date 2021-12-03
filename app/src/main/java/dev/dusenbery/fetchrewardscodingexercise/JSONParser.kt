@@ -16,9 +16,12 @@ import java.util.ArrayList
 class JSONParser(private var c: Context?, private var jsonData: String, private var myRecyclerView: RecyclerView) : AsyncTask<Void, Void, Boolean>() {
 
     private lateinit var pd: ProgressDialog
-    private var items = ArrayList<Group>()
-    private var filteredItems = ArrayList<Group>()
-    private var itemsSortedByListId = ArrayList<Group>()
+    private var items = ArrayList<Item>()
+    private var filteredItems = ArrayList<Item>()
+    private var itemsSortedByListId = ArrayList<Item>()
+    private var itemsSortedByListIdAndThenName = ArrayList<Item>()
+
+    private var listIdof4items = ArrayList<Item>()
 
     /*
     Parse JSON data
@@ -29,7 +32,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             var jo: JSONObject
 
             items.clear()
-            var item: Group
+            var item: Item
 
             //adds Items from JSON data to an ArrayList of Item objects called filteredItems(after filtering out "null" and blank names
             for (i in 0 until ja.length()) {
@@ -39,7 +42,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 val name = jo.getString("name")
                 val listId = jo.getInt("listId")
 
-                item = Group(id,name,listId)
+                item = Item(id,name,listId)
 
                 /*
                     Filter out any items where "name" is blank or null.
@@ -66,58 +69,57 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
                 val name = item.getItemName().toString()
                 val listId = item.getItemListId()
 
-                item = Group(id,name,listId)
+                item = Item(id,name,listId)
 
                 itemsSortedByListId.add(item)
             }
 
             //makes the newly sorted item list equal to the items ArrayList that gets displayed in the RecyclerView
-            items = itemsSortedByListId
-
-            //gets a count of each of the Items of a certain listId
-            val listIdsCount = itemsSortedByListId.groupingBy { it.listId }.eachCount()
-            println("listIdsCount: " + listIdsCount)
-
-            //prints the the number of how many different listId(s) there are.
-            println("listIdsCount.size: " + listIdsCount.size)
-
-            //creates an array of Item objects for each listId
-            //private val itemGroup1 = ArrayList<Item>()
-
-            //Creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key.
-            val itemsGroupedByItemIdMap = itemsSortedByListId.groupBy { it.listId }
-            println("itemsGroupedByItemIdMap: " + itemsGroupedByItemIdMap)
-
-            //prints and Array of all listId(s), which are the keys in the itemsGroupedByItemIdMap Map
-            println("itemsGroupedByItemIdMap.keys: " + itemsGroupedByItemIdMap.keys)
+            //items = itemsSortedByListId
 
 
-            // --- things I recently tried --- //
 
-            for(i in 1 until listIdsCount.size+1){
-                //prints out a List of Item objects with listId of i
-                println("List for listId of " + i + ":::::  "  + itemsGroupedByItemIdMap[i])
 
-                //adds that List of Item objects to an ArrayList
-                //private var itemGroup(i) = ArrayList<Item>()
-                // NOT POSSIBLE TO DYNAMICALLY CREATE VARIABLES IN KOTLIN
+
+
+            listIdof4items.clear()
+            for (i in 0 until itemsSortedByListId.size) {
+                if (itemsSortedByListId[i].listId == 4) {
+                    listIdof4items.add(itemsSortedByListId[i])
+                }
+            }
+            items = listIdof4items
+
+
+
+
+
+
+
+
+            /*
+            //sorts itemsSortedByListId ArrayList by name, returns a List type.
+            itemsSortedByListId.groupingBy { it.name }.eachCount()
+            var itemsSortedByNameList = itemsSortedByListId.sortedWith(compareBy({ it.name }))
+
+            itemsSortedByListIdAndThenName.clear()
+            //adds Item objects from the itemsSortedByNameList List to an ArrayList of Item objects called itemsSortedByListIdAndThenName
+            for (i in 0 until itemsSortedByNameList.size) {
+                item = itemsSortedByNameList.get(i)
+
+                val id = item.getItemId()
+                val name = item.getItemName().toString()
+                val listId = item.getItemListId()
+
+                item = Item(id,name,listId)
+
+                itemsSortedByListIdAndThenName.add(item)
             }
 
-            if(itemsGroupedByItemIdMap.containsKey(1)){
-                //prints out a List of Item objects with listId of 1
-                //println("List for listId of 1: ")
-            }
 
-            for(i in 1 until listIdsCount.size){
-                // add to ArrayList
-                //itemGroups.add()
-            }
-
-            if (itemsSortedByListId[0].listId == 1){
-                //println("The list ID for this Item object is: 1")
-            }
-            // --- [end] things I recently tried --- //
-
+            //makes the newly sorted item list equal to the items ArrayList that gets displayed in the RecyclerView
+            //items = itemsSortedByListIdAndThenName
+            */
 
 
 

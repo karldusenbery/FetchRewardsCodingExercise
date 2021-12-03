@@ -3,7 +3,7 @@
  */
 package dev.dusenbery.fetchrewardscodingexercise
 
-class Group(
+class Item(
     var id: Int,
     var name: String,
     var listId: Int

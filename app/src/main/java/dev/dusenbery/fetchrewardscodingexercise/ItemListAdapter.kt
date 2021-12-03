@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fetchrewardscodingexercise.R
 
-class ItemListAdapter(private var c: Context?, val items: ArrayList<Group>): RecyclerView.Adapter<ItemListViewHolder>() {
+class ItemListAdapter(private var c: Context?, val items: ArrayList<Item>): RecyclerView.Adapter<ItemListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemListViewHolder {
         val view = LayoutInflater.from(parent.context)
