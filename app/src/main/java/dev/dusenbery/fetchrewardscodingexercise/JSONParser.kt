@@ -19,9 +19,11 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
     private var items = ArrayList<Item>()
     private var filteredItems = ArrayList<Item>()
     private var itemsSortedByListId = ArrayList<Item>()
+
     private var itemsSortedByListIdAndThenName = ArrayList<Item>()
 
-    private var listIdof4items = ArrayList<Item>()
+    private var newList = ArrayList<Item>()
+    private var itemsWithAlistIdof4 = ArrayList<Item>()
 
     /*
     Parse JSON data
@@ -75,20 +77,42 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             }
 
             //makes the newly sorted item list equal to the items ArrayList that gets displayed in the RecyclerView
-            //items = itemsSortedByListId
+            items = itemsSortedByListId
 
 
+            //Creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key.
+            val itemsGroupedByItemIdMap = itemsSortedByListId.groupBy { it.listId }
 
+            //prints an array of all listId(s), which are the keys in the itemsGroupedByItemIdMap Map
+            //itemsGroupedByItemIdMap.keys returns a Set<Int>.
+            println("itemsGroupedByItemIdMap.keys:      " + itemsGroupedByItemIdMap.keys)
 
+            var howManyListIds = itemsGroupedByItemIdMap.keys.size
+            println("howManyListIds?:  " + howManyListIds)
 
+            //iterates through all listIds (in this case, there's 4)
+            for (i in 1 until howManyListIds) {
+                //iterates through all items with current listId of i
+                for (j in 0 until itemsSortedByListId.size) {
+                    ///// filters out only items with a listId == i
+                    if (itemsSortedByListId[j].listId == i) {
+                        println("itemsSortedByListId[j]" + itemsSortedByListId[j])
+                        newList.add(itemsSortedByListId[j])
+                        println("newList.size =    " + newList.size)
+                    }
+                }
+                println("newList:      " + newList)
+            }
+            //items = newList
 
-            listIdof4items.clear()
+            ///// filters out only items with a listId == 4
+            itemsWithAlistIdof4.clear()
             for (i in 0 until itemsSortedByListId.size) {
                 if (itemsSortedByListId[i].listId == 4) {
-                    listIdof4items.add(itemsSortedByListId[i])
+                    itemsWithAlistIdof4.add(itemsSortedByListId[i])
                 }
             }
-            items = listIdof4items
+            println("itemsWithAlistIdof4:      " + itemsWithAlistIdof4)
 
 
 
