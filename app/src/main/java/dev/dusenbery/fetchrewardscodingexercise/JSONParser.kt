@@ -19,7 +19,6 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
     private var items = ArrayList<Item>()
     private var filteredItems = ArrayList<Item>()
     private var itemsSortedByListId = ArrayList<Item>()
-    //private var itemGroups = ArrayList<ArrayList>()
 
     /*
     Parse JSON data
@@ -73,7 +72,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             }
 
             //makes the newly sorted item list equal to the items ArrayList that gets displayed in the RecyclerView
-            //items = itemsSortedByListId
+            items = itemsSortedByListId
 
             //gets a count of each of the Items of a certain listId
             val listIdsCount = itemsSortedByListId.groupingBy { it.listId }.eachCount()
@@ -82,6 +81,9 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             //prints the the number of how many different listId(s) there are.
             println("listIdsCount.size: " + listIdsCount.size)
 
+            //creates an array of Item objects for each listId
+            //private val itemGroup1 = ArrayList<Item>()
+
             //Creates a Map with a key of listId as the group number first, and ArrayLists in each mapped listId key.
             val itemsGroupedByItemIdMap = itemsSortedByListId.groupBy { it.listId }
             println("itemsGroupedByItemIdMap: " + itemsGroupedByItemIdMap)
@@ -89,20 +91,21 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             //prints and Array of all listId(s), which are the keys in the itemsGroupedByItemIdMap Map
             println("itemsGroupedByItemIdMap.keys: " + itemsGroupedByItemIdMap.keys)
 
-            //prints a List of Item objects in the Map with a key of 1
-            println("itemsGroupedByItemIdMap[1]:  " + itemsGroupedByItemIdMap[1])
-
-            for(i in 0 until listIdsCount.size){
-                //prints out a List of Item objects with listId of i
-                println("List for listId of " + i + ":::::"  + itemsGroupedByItemIdMap[i])
-            }
-
 
             // --- things I recently tried --- //
 
+            for(i in 1 until listIdsCount.size+1){
+                //prints out a List of Item objects with listId of i
+                println("List for listId of " + i + ":::::  "  + itemsGroupedByItemIdMap[i])
+
+                //adds that List of Item objects to an ArrayList
+                //private var itemGroup(i) = ArrayList<Item>()
+                // NOT POSSIBLE TO DYNAMICALLY CREATE VARIABLES IN KOTLIN
+            }
+
             if(itemsGroupedByItemIdMap.containsKey(1)){
                 //prints out a List of Item objects with listId of 1
-                println("List for listId of 1: ")
+                //println("List for listId of 1: ")
             }
 
             for(i in 1 until listIdsCount.size){
@@ -111,7 +114,7 @@ class JSONParser(private var c: Context?, private var jsonData: String, private 
             }
 
             if (itemsSortedByListId[0].listId == 1){
-                println("The list ID for this Item object is: 1")
+                //println("The list ID for this Item object is: 1")
             }
             // --- [end] things I recently tried --- //
 
